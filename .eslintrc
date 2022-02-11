@@ -1,0 +1,10 @@
+{
+  "extends": "@react-native-community",
+  "parser": "@babel/eslint-parser",
+  "rules": {
+    "quotes": [2, "double", { "avoidEscape": true }],
+    "semi": [2, "error", "never"],
+    "unused-imports/no-unused-imports": "error",
+    "no-inline-styles/no-inline-styles": 2
+  }
+}
