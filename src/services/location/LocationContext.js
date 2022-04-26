@@ -4,15 +4,22 @@ import { locationRequest, locationTransform } from "./LocationService"
 export const LocationContext = createContext()
 
 export const LocationContextProvider = ({ children }) => {
-  const [keyword, setKeyword] = useState("san francisco")
+  const [keyword, setKeyword] = useState("San Francisco")
   const [location, setLocation] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const onSearch = (search_keyword = "Antwerp") => {
+  const onSearch = search_keyword => {
     setLoading(true)
     setKeyword(search_keyword)
-    locationRequest(search_keyword.toLowerCase())
+  }
+
+  useEffect(() => {
+    if (!keyword.length) {
+      //dont do anything
+      return
+    }
+    locationRequest(keyword.toLowerCase().trim())
       .then(locationTransform)
       .then(result => {
         setLoading(false)
@@ -22,11 +29,7 @@ export const LocationContextProvider = ({ children }) => {
         setError(error)
         setLoading(false)
       })
-  }
-
-  useEffect(() => {
-    onSearch()
-  }, [])
+  }, [keyword])
 
   return (
     <LocationContext.Provider value={{ loading, error, location, search: onSearch, keyword }}>

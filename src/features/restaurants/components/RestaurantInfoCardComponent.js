@@ -4,6 +4,7 @@ import star from "../../../../assets/star"
 import open from "../../../../assets/open"
 import SpacerComponent from "../../../components/spacer/SpacerComponent"
 import { TextComponent } from "../../../components/typography/TextComponent"
+import Favourite from "../../../components/favorites/FavouriteComponent"
 import {
   RestaurantCard,
   RestaurantCardCover,
@@ -22,22 +23,24 @@ const RestaurantInfoCardComponent = ({ restaurant = {} }) => {
     photos = [
       "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
     ],
-    vicinity = "The Village, Senegambia",
+    address = "The Village, Senegambia",
     is_open_now = true,
     rating = 4,
     is_closed_temporarily = true,
+    place_id = "some place id",
   } = restaurant
   const rating_array = Array.from(new Array(Math.floor(rating)))
 
   return (
     <RestaurantCard elevation={5}>
+      <Favourite restaurant={restaurant} />
       <RestaurantCardCover source={{ url: photos[0] }} />
       <Info>
         <TextComponent variant={"label"}>{name}</TextComponent>
         <Section>
           <Rating>
-            {rating_array.map((element, index) => (
-              <SvgXml xml={star} width={20} height={20} key={index} />
+            {rating_array.map((_, i) => (
+              <SvgXml xml={star} width={20} height={20} key={`star-${place_id}-${i}`} />
             ))}
           </Rating>
           <SectionEnd>
@@ -50,7 +53,7 @@ const RestaurantInfoCardComponent = ({ restaurant = {} }) => {
             </SpacerComponent>
           </SectionEnd>
         </Section>
-        <Address>{vicinity}</Address>
+        <Address>{address}</Address>
       </Info>
     </RestaurantCard>
   )
